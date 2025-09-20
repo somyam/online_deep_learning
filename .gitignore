@@ -1,0 +1,19 @@
+# Exclude all .zip files
+*.zip
+
+# Exclude all .pyc files
+*.pyc
+
+# Download images using curl command provided in Colab Notebooks
+*.jpg
+*.png
+
+
+# Exclude specific directories
+homework*/logs/
+homework*/log/
+homework*/run/
+homework*/runs/
+homework*/data/
+homework*/*_data/
+
