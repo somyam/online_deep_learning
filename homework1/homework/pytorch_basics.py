@@ -34,7 +34,7 @@ class PyTorchBasics:
 
         Solution length: 13 characters
         """
-        raise NotImplementedError
+        return x[::3]
 
     @staticmethod
     def make_it_pytorch_2(x: torch.Tensor) -> torch.Tensor:
@@ -53,12 +53,12 @@ class PyTorchBasics:
                     if v > maxval:
                         maxval = v
                 y[i, j] = maxval
-        return y
+        return y #2d tensor
         --------
 
         Solution length: 26 characters
         """
-        raise NotImplementedError
+        return x.max(dim=-1)[0]
 
     @staticmethod
     def make_it_pytorch_3(x: torch.Tensor) -> torch.Tensor:
@@ -72,12 +72,12 @@ class PyTorchBasics:
         for i in x.flatten():
             if i not in y:
                 y.append(i)
-        return torch.as_tensor(sorted(y))
+        return torch.as_tensor(sorted(y)) #1D tensor
         --------
 
         Solution length: 22 characters
         """
-        raise NotImplementedError
+        return x.unique(sorted=True)
 
     @staticmethod
     def make_it_pytorch_4(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
@@ -102,7 +102,7 @@ class PyTorchBasics:
 
         Solution length: 27 characters
         """
-        raise NotImplementedError
+        return (y>x.mean()).sum()
 
     @staticmethod
     def make_it_pytorch_5(x: torch.Tensor) -> torch.Tensor:
@@ -121,7 +121,7 @@ class PyTorchBasics:
 
         Solution length: 11 characters
         """
-        raise NotImplementedError
+        return x.mT
 
     @staticmethod
     def make_it_pytorch_6(x: torch.Tensor) -> torch.Tensor:
@@ -139,7 +139,7 @@ class PyTorchBasics:
 
         Solution length: 19 characters
         """
-        raise NotImplementedError
+        return torch.diag(x)
 
     @staticmethod
     def make_it_pytorch_7(x: torch.Tensor) -> torch.Tensor:
@@ -157,7 +157,7 @@ class PyTorchBasics:
 
         Solution length: 27 characters
         """
-        raise NotImplementedError
+        return torch.diag(torch.fliplr(x))
 
     @staticmethod
     def make_it_pytorch_8(x: torch.Tensor) -> torch.Tensor:
@@ -177,7 +177,7 @@ class PyTorchBasics:
 
         Solution length: 22 characters
         """
-        raise NotImplementedError
+        return x.cumsum(dim=0)
 
     @staticmethod
     def make_it_pytorch_9(x: torch.Tensor) -> torch.Tensor:
@@ -200,9 +200,17 @@ class PyTorchBasics:
         return y
         --------
 
+         Uses x.cumsum(0) to compute cumulative sum along
+  dimension 0 (rows)
+  - Then uses .cumsum(1) to compute cumulative sum
+  along dimension 1 (columns)
+  - Results in a 2D tensor where each element (i,j)
+  contains the sum of all elements in the rectangle
+  from (0,0) to (i,j)
+
         Solution length: 36 characters
         """
-        raise NotImplementedError
+        return x.cumsum(0).cumsum(1)
 
     @staticmethod
     def make_it_pytorch_10(x: torch.Tensor, c: torch.Tensor) -> torch.Tensor:
@@ -225,7 +233,7 @@ class PyTorchBasics:
 
         Solution length: 49 characters
         """
-        raise NotImplementedError
+        return torch.where(x < c, 0, x)
 
     @staticmethod
     def make_it_pytorch_11(x: torch.Tensor, c: torch.Tensor) -> torch.Tensor:
@@ -249,8 +257,8 @@ class PyTorchBasics:
 
         Solution length: 30 characters
         """
-        raise NotImplementedError
-
+        return torch.stack(torch.where(x < c))
+    
     @staticmethod
     def make_it_pytorch_12(x: torch.Tensor, m: torch.BoolTensor) -> torch.Tensor:
         """
@@ -269,7 +277,7 @@ class PyTorchBasics:
 
         Solution length: 11 characters
         """
-        raise NotImplementedError
+        return x[m] #return values
 
     @staticmethod
     def make_it_pytorch_extra_1(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
@@ -290,10 +298,14 @@ class PyTorchBasics:
             z.append(xy1 - xy2)
         return torch.as_tensor(z)
         --------
+  - Uses torch.cat([x, y]) to concatenate the two 1D
+  tensors into one sequence
+         Uses .diff() to compute the difference between
+  consecutive elements (element[i+1] - element[i])
 
         Solution length: 36 characters
         """
-        raise NotImplementedError
+        return torch.cat([x, y]).diff()
 
     @staticmethod
     def make_it_pytorch_extra_2(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
@@ -312,6 +324,17 @@ class PyTorchBasics:
         return torch.as_tensor(count)
         --------
 
+        - Uses x.unsqueeze(1) to make x shape (len(x), 1)
+        and y.unsqueeze(0) to make y shape (1, len(y))
+        - Computes pairwise differences (x.unsqueeze(1) - 
+        y.unsqueeze(0)) resulting in shape (len(x), len(y))
+        - Takes absolute value and checks if < 1e-3,
+        creating a boolean matrix
+        - Uses .any(1) to check if each row (each x element)
+        has at least one True value
+        - Uses .sum() to count how many x elements satisfy
+        the condition
+
         Solution length: 64 characters
         """
-        raise NotImplementedError
+        return ((x.unsqueeze(1) - y.unsqueeze(0)).abs() <1e-3).any(1).sum()
