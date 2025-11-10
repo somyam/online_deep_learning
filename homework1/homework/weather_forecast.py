@@ -47,8 +47,7 @@ class WeatherForecast:
         daily_averages = self.data.mean(dim=1, keepdim=True)
         differences = torch.abs(self.data - daily_averages)
         max_diff_indices = differences.argmax(dim=1)
-        return self.data[torch.arange(self.data.size(0)), 
-  max_diff_indices]
+        return self.data[torch.arange(self.data.size(0)), max_diff_indices]
 
     def max_last_k_days(self, k: int) -> torch.Tensor:
         """
