@@ -1,5 +1,4 @@
-# Transformers and convolutional networks
-
+# Homework 4
 In this homework, we will learn to drive with Transformers and convolutional networks!
 
 Colab Starter: [link](https://colab.research.google.com/drive/1wRuzQ15Q9-ef2L7Yju-KbAUHo3w1O10i?usp=sharing)
