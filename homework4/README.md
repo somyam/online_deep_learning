@@ -1,4 +1,4 @@
-# Homework 4
+# Transformers and convolutional networks
 
 In this homework, we will learn to drive with Transformers and convolutional networks!
 
